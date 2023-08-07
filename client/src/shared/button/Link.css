@@ -1,0 +1,12 @@
+.Link {
+  /* min-width: 75%; */
+  min-height: auto;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  color: var(--text);
+}
+.Link + .Link {
+  margin-top: 20px;
+}

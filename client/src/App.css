@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+:root {
+  --text: #fbf2fd;
+  --background: #031e2b;
+  --primary: #dbb0e3;
+  --secondary: #2f0138;
+  --accent: #a55db1;
+}
+* {
+  font-family: poppins, "sans-serif";
+}
+body {
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
+  max-width: 90%;
+}
