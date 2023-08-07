@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 const classesRoutes = require("./routes/classes-routes");
 const usersRoutes = require("./routes/users-routes");
+const assignmentsRoutes = require("./routes/assignments-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use("/api/classes", classesRoutes); // => /api/classes...
 app.use("/api/users", usersRoutes); // => /api/users...
+app.use("/api/assignments", assignmentsRoutes); // => /api/assignments...
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
