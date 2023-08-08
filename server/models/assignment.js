@@ -5,7 +5,7 @@ const assignmentSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   dueDate: { type: String, required: false },
-  classId: { type: String, required: true },
-  creator: { type: String, required: true },
+  classId: { type: mongoose.Types.ObjectId, required: true, ref: "Class" },
+  creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
 module.exports = mongoose.model("Assignment", assignmentSchema);

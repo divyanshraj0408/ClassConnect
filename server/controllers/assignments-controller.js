@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 
 const HttpError = require("../models/http-error");
 const Assignments = require("../models/assignment");
-// const User = require("../models/user");
-// const Class = require("../models/class");
+const User = require("../models/user");
+const Class = require("../models/class");
 
 let DUMMY_ASSIGNMENTS = [
   // Dummy data, later to be replaced by data from database
@@ -48,11 +48,40 @@ const createAssignment = async (req, res, next) => {
   const createdAssignment = new Assignments({
     title,
     description,
-    creator,
     classId,
+    creator,
   });
+  let classInfo;
+  let user;
+
   try {
-    await createdAssignment.save();
+    user = await User.findById(creator);
+    classInfo = await Class.findById(classId);
+  } catch (err) {
+    const error = new HttpError(
+      "Creating assignment failed, please try again.",
+      500
+    );
+  }
+  if (!classInfo) {
+    const error = new HttpError("Could not find class for provided id.", 404);
+    return next(error);
+  }
+  if (!user) {
+    const error = new HttpsError("Could not find assignment");
+    return next(error);
+  }
+  console.log(classInfo, user);
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdAssignment.save({ session: sess });
+    user.assignments.push(createdAssignment);
+    classInfo.assignment.push(createdAssignment);
+    await user.save({ session: sess });
+    await classInfo.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     console.log(err);
     const error = new HttpError(
@@ -61,9 +90,7 @@ const createAssignment = async (req, res, next) => {
     );
     return next(error);
   }
-  res
-    .status(201)
-    .json({ assignment: createdAssignment.toObject({ getters: true }) });
+  res.status(201).json({ createAssignment: createdAssignment });
 };
 
 const deleteAssignment = (req, res, next) => {
