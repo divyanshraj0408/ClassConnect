@@ -93,16 +93,31 @@ const createAssignment = async (req, res, next) => {
   res.status(201).json({ createAssignment: createdAssignment });
 };
 
-const deleteAssignment = (req, res, next) => {
+const deleteAssignment = async (req, res, next) => {
   // /api/assignments/:assignmentId ==> to delete an assignment with a specific id
   const assignmentId = req.params.aid; // Use req.params.assignmentId instead of req.params.aid
-  DUMMY_ASSIGNMENTS = DUMMY_ASSIGNMENTS.filter((a) => a.id !== assignmentId);
-  if (!assignmentId) {
-    throw new HttpError(
+  try {
+    await Assignments.deleteOne({ _id: assignmentId });
+
+    const usersToUpdate = await User.find({ assignments: assignmentId });
+    const classesToUpdate = await Class.find({ assignment: assignmentId });
+
+    for (let i = 0; i < usersToUpdate.length; i++) {
+      usersToUpdate[i].assignments.pull(assignmentId);
+      await usersToUpdate[i].save();
+    }
+    for (let i = 0; i < classesToUpdate.length; i++) {
+      classesToUpdate[i].assignment.pull(assignmentId);
+      await classesToUpdate[i].save();
+    }
+  } catch {
+    const error = new HttpError(
       "Could not find a assignment for the provided id.",
       404
     );
+    return next(error);
   }
+
   res.status(200).json({ message: "Deleted assignment." });
 };
 exports.getAssignments = getAssignments;
