@@ -1,0 +1,7 @@
+.landing-page__content {
+  display: flex;
+  gap: 20px;
+}
+.landing-page__header-image img {
+  width: 50rem;
+}
