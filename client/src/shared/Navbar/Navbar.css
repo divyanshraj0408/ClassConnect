@@ -3,6 +3,8 @@
   max-width: 100%;
   box-shadow: 0 0.5px 5px var(--accent);
   text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
 }
 .navbar-container {
   height: 100%;

@@ -1,5 +1,5 @@
-import "./Class.css";
-const Class = () => {
+import "./Assignments.css";
+const Assignments = () => {
   return (
     <>
       <div className="class_banner">
@@ -13,4 +13,4 @@ const Class = () => {
   );
 };
 
-export default Class;
+export default Assignments;
