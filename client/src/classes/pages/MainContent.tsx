@@ -29,7 +29,6 @@ const MainContent = () => {
   return (
     <div>
       <Navbar logo="Logo" handleClick={handleClick} text="Add Classes" />
-
       <div className="container">
         {menuVisibility && <Menu handleClick={handleClick} />}
         <div className="classes__cards">

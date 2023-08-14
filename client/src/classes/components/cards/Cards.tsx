@@ -11,7 +11,7 @@ interface Props {
 const Cards = (props: Props) => {
   return (
     <>
-      <Link to={`/${props.id}/assignments`} className="cards__component">
+      <Link to={`/${props.id}/assigments`} className="cards__component">
         <div className="cards__component_info">
           <p>{props.name}</p>
           <p>{props.classCode}</p>

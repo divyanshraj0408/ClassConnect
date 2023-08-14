@@ -1,5 +1,52 @@
-.Banner_img {
+.assignments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+}
+.assignments-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 80%;
+}
+.assignment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 80%;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+}
+.assignment-card:hover {
+  box-shadow: 0 0 5px var(--accent);
+}
+.assignment-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.assignment-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.assignment-card-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
