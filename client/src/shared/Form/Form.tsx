@@ -11,10 +11,10 @@ const Form = (props: Props) => {
     <>
       <div className="modal-wrapper" onClick={props.handleClick}></div>
       <form className="card form">
-        <Input type="text" placeholder="ClassName" />
-        <Input type="text" placeholder="Section" />
-        <Input type="text" placeholder="class code" />
-        <Input type="submit" value="Create Class" />
+        <Input type="text" placeholder="ClassName" element="input" />
+        <Input type="text" placeholder="Section" element="input" />
+        <Input type="text" placeholder="class code" element="input" />
+        <Input type="submit" value="Create Class" element="input" />
       </form>
     </>
   );
