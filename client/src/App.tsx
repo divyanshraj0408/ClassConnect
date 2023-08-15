@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<LandingPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/signup" element={<SignupPage />}></Route>
-          <Route path="/classes" element={<MainContent />}></Route>
+          <Route path="/:uid/classes" element={<MainContent />}></Route>
           <Route path="/:cid/assigments" element={<Assignments />}></Route>
         </Routes>
       </Router>

@@ -21,7 +21,7 @@ const LoginPage = () => {
           type="password"
           placeholder="Password"
         />
-        <Link to="/classes">
+        <Link to={`/classes`}>
           <input type="submit" value="Login" />
         </Link>
         <p>

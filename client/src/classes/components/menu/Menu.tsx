@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Form from "../../../shared/Form/Form";
-import Link from "../../../shared/button/Link";
+import Link from "../../../shared/button/LinkElement";
 import "./Menu.css";
 interface Props {
   handleClick: () => void;
