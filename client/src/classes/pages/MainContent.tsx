@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../../shared/Navbar/Navbar";
-import Menu from "../components/menu/Menu";
+import Menu from "../components/createJoinClass/Menu";
 import Cards from "../components/cards/Cards";
 import "./MainContent.css";
 
