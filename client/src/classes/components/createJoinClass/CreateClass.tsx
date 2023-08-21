@@ -7,7 +7,7 @@ import "./Menu.css";
 interface Props {
   handleClick: () => void;
 }
-const createClass = (props: Props) => {
+const CreateClass = (props: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
 
@@ -26,6 +26,7 @@ const createClass = (props: Props) => {
       </menu>
       {showModal && (
         <Form
+          name="Create Class"
           noOfInputs={["className", "description"]}
           handleClick={showCreateClassModal}
         />
@@ -35,4 +36,4 @@ const createClass = (props: Props) => {
   );
 };
 
-export default createClass;
+export default CreateClass;
