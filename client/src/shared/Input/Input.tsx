@@ -1,5 +1,6 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 
+import "./Input.css";
 interface InputProps {
   placeholder?: string;
   type: string;
@@ -51,7 +52,11 @@ const Input = (props: InputProps) => {
   return (
     <>
       {element}
-      {inputState.isValid ? null : <p>{props.placeholder} is not valid</p>}
+      {inputState.isValid ? null : (
+        <span className="warning_message">
+          {props.placeholder} is not valid ⚠️
+        </span>
+      )}
     </>
   );
 };

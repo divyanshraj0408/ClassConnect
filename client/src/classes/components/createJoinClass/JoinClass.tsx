@@ -6,12 +6,16 @@ interface JoinClassProps {
   handleClick: () => void;
 }
 
-const joinClass = (props: JoinClassProps) => {
+const JoinClass = (props: JoinClassProps) => {
   return (
     <div>
       <div className="menu-wrapper" onClick={props.handleClick}></div>
-      <Form noOfInputs={["classCode"]} handleClick={props.handleClick} />
+      <Form
+        name="Join Class"
+        noOfInputs={["classCode"]}
+        handleClick={props.handleClick}
+      />
     </div>
   );
 };
-export default joinClass;
+export default JoinClass;
