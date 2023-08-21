@@ -2,6 +2,7 @@ import "../../landingPage/pages/LandingPage.css";
 import "../../classes/components/cards/cards.css";
 import "./Form.css";
 import Input from "../Input/Input";
+import Button from "../button/Button";
 
 interface Props {
   handleClick: () => void;
@@ -14,7 +15,7 @@ const Form = (props: Props) => {
         <Input type="text" placeholder="ClassName" element="input" />
         <Input type="text" placeholder="Section" element="input" />
         <Input type="text" placeholder="class code" element="input" />
-        <Input type="submit" value="Create Class" element="input" />
+        <Button inverse>Click</Button>
       </form>
     </>
   );

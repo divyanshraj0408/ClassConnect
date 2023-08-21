@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import React, { useReducer } from "react";
 
 interface InputProps {
   placeholder?: string;
