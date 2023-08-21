@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../../shared/Navbar/Navbar";
-import Menu from "../components/createJoinClass/Menu";
+import CreateClass from "../components/createJoinClass/CreateClass";
 import Cards from "../components/cards/Cards";
 import "./MainContent.css";
 
@@ -34,15 +34,15 @@ const MainContent = () => {
     <div>
       <Navbar logo="Logo" handleClick={handleClick} text="Add Classes" />
       <div className="container">
-        {menuVisibility && <Menu handleClick={handleClick} />}
+        {menuVisibility && <CreateClass handleClick={handleClick} />}
         <div className="classes__cards">
           {loadedClasses.map((card) => (
             <Cards
               key={card.name}
               name={card.name}
               description={
-                card.discription.length > 20
-                  ? card.discription.slice(0, 20) + "..."
+                card.discription.length > 30
+                  ? card.discription.slice(0, 30) + "..."
                   : card.discription
               }
               creator={card.creator}

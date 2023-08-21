@@ -6,15 +6,16 @@ import Button from "../button/Button";
 
 interface Props {
   handleClick: () => void;
+  noOfInputs: Array<string>;
 }
 const Form = (props: Props) => {
   return (
     <>
       <div className="modal-wrapper" onClick={props.handleClick}></div>
       <form className="card form">
-        <Input type="text" placeholder="ClassName" element="input" />
-        <Input type="text" placeholder="Section" element="input" />
-        <Input type="text" placeholder="class code" element="input" />
+        {props.noOfInputs.map((input) => (
+          <Input key={input} element="input" placeholder={input} type="text" />
+        ))}
         <Button inverse>Click</Button>
       </form>
     </>
