@@ -3,6 +3,7 @@ import "../../classes/components/cards/cards.css";
 import "./Form.css";
 import Input from "../Input/Input";
 import Button from "../button/Button";
+import { VALIDATOR_REQUIRE } from "../util/validator";
 
 interface Props {
   handleClick: () => void;
@@ -16,9 +17,15 @@ const Form = (props: Props) => {
       <form className="card form">
         <h2 className="form__name">{props.name}</h2>
         {props.noOfInputs.map((input) => (
-          <Input key={input} element="input" placeholder={input} type="text" />
+          <Input
+            key={input}
+            element="input"
+            placeholder={input}
+            type="text"
+            validators={[VALIDATOR_REQUIRE()]}
+          />
         ))}
-        <Button inverse>Click</Button>
+        <Button inverse>{props.name}</Button>
       </form>
     </>
   );
