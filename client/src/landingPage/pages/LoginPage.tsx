@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import Button from "../../shared/button/Button";
 import "./LoginPage.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,9 +22,7 @@ const LoginPage = () => {
           type="password"
           placeholder="Password"
         />
-        <Link to={`/classes`}>
-          <input type="submit" value="Login" />
-        </Link>
+        <Button to="/classes">Login</Button>
         <p>
           Already registred? <Link to="/signup">signup</Link>
         </p>

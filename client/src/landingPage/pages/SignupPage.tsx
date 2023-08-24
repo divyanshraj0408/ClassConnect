@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import Button from "../../shared/button/Button";
+
 const SignupPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +29,7 @@ const SignupPage = () => {
           type="password"
           placeholder="Password"
         />
-        <input type="submit" value="Signup" />
+        <Button>Signup</Button>
         <p>
           Already registred? <Link to="/login">login</Link>
         </p>
