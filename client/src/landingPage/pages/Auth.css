@@ -1,0 +1,8 @@
+.Authpage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  height: 100vh;
+  color: var(--background);
+}
