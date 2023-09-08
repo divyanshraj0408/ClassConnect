@@ -3,7 +3,7 @@ import "../../classes/components/cards/cards.css";
 import "./Form.css";
 import Input from "../Input/Input";
 import Button from "../button/Button";
-import { VALIDATOR_REQUIRE } from "../util/validator";
+import { VALIDATOR_REQUIRE } from "../util/Validator";
 
 interface Props {
   handleClick: () => void;

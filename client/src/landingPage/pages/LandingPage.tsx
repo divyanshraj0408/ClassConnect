@@ -7,7 +7,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/login");
+    navigate("/auth");
   };
   return (
     <div>
