@@ -1,43 +1,58 @@
-import { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, ChangeEvent, FocusEvent } from "react";
 
 import { validate } from "../util/Validator";
 import "./Input.css";
+
 interface InputProps {
+  id: string;
+  initialValue?: string;
+  initialValid?: boolean;
+  element: "input" | "textarea";
+  type?: string;
   placeholder?: string;
-  type: string;
-  value?: string;
-  element?: string;
-  id?: string;
   rows?: number;
-  validators?: any[];
-  changeHandler?: (id: string, value: string, isValid: boolean) => void;
-  onInput?: (id: string, value: string, isValid: boolean) => void;
+  label: string;
+  validators: any[];
+  onInput: Function;
+  errorText: string;
 }
 
-const inputReducer = (state: any, action: any) => {
+interface InputState {
+  value: string;
+  isTouched: boolean;
+  isValid: boolean;
+}
+
+const inputReducer = (
+  state: InputState,
+  action: {
+    type: string;
+    val?: string;
+    validators?: ((value: string) => boolean)[];
+  }
+) => {
   switch (action.type) {
     case "CHANGE":
       return {
         ...state,
-        value: action.val,
-        isValid: validate(action.val, action.validators),
+        value: action.val || "",
+        isValid: validate(action.val || "", action.validators || []),
       };
-    case "TOUCH": {
+    case "TOUCH":
       return {
         ...state,
         isTouched: true,
       };
-    }
-
     default:
       return state;
   }
 };
-const Input = (props: InputProps) => {
+
+const Input: React.FC<InputProps> = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
+    value: props.initialValue || "",
     isTouched: false,
-    isValid: false,
+    isValid: props.initialValid || false,
   });
 
   const { id, onInput } = props;
@@ -47,7 +62,9 @@ const Input = (props: InputProps) => {
     onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
 
-  const changeHandler = (event) => {
+  const changeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     dispatch({
       type: "CHANGE",
       val: event.target.value,
@@ -80,18 +97,18 @@ const Input = (props: InputProps) => {
         value={inputState.value}
       />
     );
+
   return (
     <div
       className={`form-control ${
         !inputState.isValid && inputState.isTouched && "form-control--invalid"
       }`}
     >
-      {/* <label htmlFor={props.id}>{props.placeholder}</label> */}
+      <label htmlFor={props.id}>{props.label}</label>
       {element}
-      {!inputState.isValid && inputState.isTouched && (
-        <p>{props.placeholder} is not valid ⚠️</p>
-      )}
+      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
 };
+
 export default Input;
