@@ -11,6 +11,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  // CORS error handling
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all domains
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  ); // Allow these headers
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE"); // Allow these methods
+  next();
+});
+
 app.use("/api/classes", classesRoutes); // => /api/classes...
 app.use("/api/users", usersRoutes); // => /api/users...
 app.use("/api/assignments", assignmentsRoutes); // => /api/assignments...
