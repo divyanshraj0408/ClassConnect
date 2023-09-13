@@ -1,25 +1,54 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { useState, useCallback } from "react";
 
 import LandingPage from "./landingPage/pages/LandingPage";
 import MainContent from "./classes/pages/MainContent";
-import SignupPage from "./landingPage/pages/SignupPage";
 import Assignments from "./classes/pages/Assignments";
 import Auth from "./landingPage/pages/Auth";
+import { AuthContext } from "./shared/context/auth-context.tsx";
 import "./App.css";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
   return (
-    <>
-      <Router>
+    <Router>
+      <AuthContext.Provider
+        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      >
         <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/signup" element={<SignupPage />}></Route>
-          <Route path="/:uid/classes" element={<MainContent />}></Route>
-          <Route path="/:cid/assigments" element={<Assignments />}></Route>
-          <Route path="/auth" element={<Auth />} />
+          {/* Routes for when the user is logged in */}
+          {isLoggedIn && (
+            <>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/:uid/classes" element={<MainContent />} />
+              <Route path="/:cid/assignments" element={<Assignments />} />
+              <Route path="*" element={<Navigate to="/:uid/classes" />} />
+            </>
+          )}
+
+          {/* Routes for when the user is not logged in */}
+          {!isLoggedIn && (
+            <>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="*" element={<Navigate to="/auth" />} />
+            </>
+          )}
         </Routes>
-      </Router>
-    </>
+      </AuthContext.Provider>
+    </Router>
   );
 }
 
