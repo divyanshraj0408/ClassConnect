@@ -9,6 +9,7 @@ interface Props {
   handleClick: () => void;
   noOfInputs: Array<string>;
   name?: string;
+  inputHandler: () => void;
 }
 const Form = (props: Props) => {
   return (
@@ -16,13 +17,16 @@ const Form = (props: Props) => {
       <div className="modal-wrapper" onClick={props.handleClick}></div>
       <form className="card form">
         <h2 className="form__name">{props.name}</h2>
-        {props.noOfInputs.map((input) => (
+        {props.noOfInputs.map((input: string) => (
           <Input
-            key={input}
+            label={input}
             element="input"
+            id={input}
+            type={input}
             placeholder={input}
-            type="text"
             validators={[VALIDATOR_REQUIRE()]}
+            onInput={props.inputHandler}
+            errorText="Please enter a valid input"
           />
         ))}
         <Button inverse>{props.name}</Button>
