@@ -3,7 +3,9 @@ import { useState } from "react";
 import Form from "../../../shared/Form/Form";
 import Link from "../../../shared/button/LinkElement";
 import JoinClass from "./JoinClass";
+import Input from "../../../shared/Input/Input";
 import "./Menu.css";
+import { VALIDATOR_REQUIRE } from "../../../shared/util/Validator";
 interface Props {
   handleClick: () => void;
 }
@@ -25,11 +27,27 @@ const CreateClass = (props: Props) => {
         <Link text="Create one" handleClick={showCreateClassModal} />
       </menu>
       {showModal && (
-        <Form
-          name="Create Class"
-          noOfInputs={["className", "description"]}
-          handleClick={showCreateClassModal}
-        />
+        <>
+          <div className="modal-wrapper" onClick={props.handleClick}></div>
+          <div className="create-class-form">
+            <Input
+              id="classname"
+              element="input"
+              label="classname"
+              validators={[VALIDATOR_REQUIRE]}
+              onInput={() => {}}
+              errorText="ENTER A VALID NAME FOR THE CLASS"
+            />
+            <Input
+              id="description"
+              element="textarea"
+              label="description"
+              validators={[VALIDATOR_REQUIRE]}
+              onInput={() => {}}
+              errorText="ENTER A VALID DESCRIPTION FOR THE CLASS"
+            />
+          </div>
+        </>
       )}
       {showJoinModal && <JoinClass handleClick={props.handleClick} />}
     </>
