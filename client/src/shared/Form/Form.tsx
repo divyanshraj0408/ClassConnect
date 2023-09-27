@@ -9,7 +9,7 @@ interface Props {
   handleClick: () => void;
   noOfInputs: Array<string>;
   name?: string;
-  inputHandler: () => void;
+  inputHandler: any;
 }
 const Form = (props: Props) => {
   return (
