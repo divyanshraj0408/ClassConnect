@@ -9,13 +9,15 @@ import Button from "../../shared/button/Button";
 import Card from "../../shared/card/Card";
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import ErrorModal from "../../shared/Modals/ErrorModal";
+import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
 import "./Auth.css";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState(undefined || null || String);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -75,6 +77,9 @@ const Auth = () => {
         });
 
         const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
         console.log(responseData);
         setIsLoading(false);
         auth.login();
@@ -86,10 +91,15 @@ const Auth = () => {
     }
   };
 
+  const errorHandler = () => {
+    setError(undefined);
+  };
   return (
     <>
+      <ErrorModal error={error} onClear={errorHandler} />
       <div className="Authpage container">
         <Card>
+          {isLoading && <LoadingSpinner asOverlay />}
           <h2>Login required</h2>
           <form onSubmit={authSubmitHandler}>
             {!isLoginMode && (
