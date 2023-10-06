@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
 
+import Input from "../../shared/Input/Input";
+
+import { VALIDATOR_REQUIRE } from "../../shared/util/Validator";
 import "./Assignments.css";
 
 const Assignments = () => {
@@ -40,6 +43,16 @@ const Assignments = () => {
   );
   return (
     <div>
+      <div>
+        <Input
+          element="input"
+          id="assignment"
+          label="Assignment"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid assignment"
+          onInput={() => {}}
+        ></Input>
+      </div>
       <div className="assignments contianer">
         <h1>Assignments</h1>
         <div className="assignments-container">

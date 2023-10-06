@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../../shared/Navbar/Navbar";
-import CreateClass from "../components/createJoinClass/CreateClass";
 import Cards from "../components/cards/Cards";
 import "./MainContent.css";
+import Modal from "../../shared/Modals/Modal";
+import ErrorModal from "../../shared/Modals/ErrorModal";
+import CreateClass from "../components/createJoinClass/CreateClassModal";
 
 const MainContent = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
@@ -34,7 +36,14 @@ const MainContent = () => {
     <div>
       <Navbar logo="Logo" handleClick={handleClick} text="Add Classes" />
       <div className="container">
-        {menuVisibility && <CreateClass handleClick={handleClick} />}
+        {menuVisibility && (
+          <CreateClass
+            onClear={() => {
+              setMenuVisibility(!menuVisibility);
+            }}
+            visible={menuVisibility}
+          />
+        )}
         <div className="classes__cards">
           {loadedClasses.map((card) => (
             <Cards
