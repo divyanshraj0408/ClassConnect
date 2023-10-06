@@ -59,11 +59,34 @@ const Auth = () => {
   const authSubmitHandler = async (event: any) => {
     event.preventDefault();
 
+    setIsLoading(true);
     if (isLoginMode) {
-      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/api/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        });
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        // console.log(responseData);
+        setIsLoading(false);
+        auth.login();
+      } catch (err: any) {
+        console.log(err);
+        setIsLoading(false);
+        setError(err.message || "Something went wrong, please try again.");
+      }
     } else {
       try {
-        setIsLoading(true);
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
@@ -80,7 +103,7 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        console.log(responseData);
+        // console.log(responseData);
         setIsLoading(false);
         auth.login();
       } catch (err: any) {
@@ -129,10 +152,10 @@ const Auth = () => {
               element="input"
               id="password"
               type="password"
-              placeholder="password"
+              placeholder="Password"
               validators={[VALIDATOR_MINLENGTH(6)]}
               onInput={inputHandler}
-              label="password"
+              label="Password"
               errorText="Please enter a valid password, at least 6 characters."
             />
             <Button type="submit" disabled={!formState.isValid}>
