@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import Navbar from "../../shared/Navbar/Navbar";
 import Cards from "../components/cards/Cards";
 import "./MainContent.css";
-import Modal from "../../shared/Modals/Modal";
-import ErrorModal from "../../shared/Modals/ErrorModal";
-import CreateClass from "../components/createJoinClass/CreateClassModal";
+// import Modal from "../../shared/Modals/Modal";
+// import ErrorModal from "../../shared/Modals/ErrorModal";
+import CreateClassModal from "../components/createJoinClass/CreateClassModal";
 
 const MainContent = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
@@ -37,7 +37,7 @@ const MainContent = () => {
       <Navbar logo="Logo" handleClick={handleClick} text="Add Classes" />
       <div className="container">
         {menuVisibility && (
-          <CreateClass
+          <CreateClassModal
             onClear={() => {
               setMenuVisibility(!menuVisibility);
             }}
