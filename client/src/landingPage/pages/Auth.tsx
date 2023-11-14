@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import Input from "../../shared/Input/Input";
+import { useNavigate } from "react-router-dom";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -14,6 +15,7 @@ import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
 import "./Auth.css";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +60,6 @@ const Auth = () => {
   };
   const authSubmitHandler = async (event: any) => {
     event.preventDefault();
-
     setIsLoading(true);
     if (isLoginMode) {
       try {
@@ -74,10 +75,13 @@ const Auth = () => {
         });
 
         const responseData = await response.json();
+
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        // console.log(responseData);
+        console.log(responseData.userId);
+        const userId = responseData.userId;
+        navigate(`/${userId}/classes`);
         setIsLoading(false);
         auth.login();
       } catch (err: any) {
@@ -103,7 +107,8 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        // console.log(responseData);
+        console.log(responseData);
+
         setIsLoading(false);
         auth.login();
       } catch (err: any) {
