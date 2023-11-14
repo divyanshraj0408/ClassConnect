@@ -34,7 +34,7 @@ const userLogin = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in!" });
+  res.json({ message: "Logged in!", userId: existingUser.id });
 };
 
 const userSignup = async (req, res, next) => {
