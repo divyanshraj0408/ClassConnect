@@ -5,7 +5,7 @@ interface Props {
   name: string;
   description: string;
   classCode: string;
-  creator: string;
+  creator?: string;
   id: string;
 }
 const Cards = (props: Props) => {
