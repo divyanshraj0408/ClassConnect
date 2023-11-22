@@ -1,6 +1,7 @@
 import Modal from "../../../shared/Modals/Modal";
 import Button from "../../../shared/button/Button";
 import Input from "../../../shared/Input/Input";
+import { useParams } from "react-router-dom";
 import { useState, useContext } from "react";
 import { useForm } from "../../../shared/hooks/form-hook";
 import { CreateClassContext } from "../../../shared/context/createClass-context";
@@ -16,6 +17,7 @@ interface props {
 }
 
 const CreateClassModal = (props: props) => {
+  const userId = useParams().uid;
   const CreateClass = useContext(CreateClassContext);
   const [formState, inputHandler] = useForm(
     {
@@ -52,7 +54,7 @@ const CreateClassModal = (props: props) => {
           body: JSON.stringify({
             title: formState.inputs.classname.value,
             description: formState.inputs.discription.value,
-            creator: "652ed3ff50a800e1403f79f2",
+            creator: userId,
             classCode: formState.inputs.subject.value,
           }),
         });
@@ -70,7 +72,7 @@ const CreateClassModal = (props: props) => {
     <>
       <form onSubmit={onSubmitHandler}>
         <Modal
-          header="Join a class"
+          header={isCreateMode ? "Create a class" : "Join a class"}
           show={props.visible}
           onCancel={() => {
             !!props.onClear;
