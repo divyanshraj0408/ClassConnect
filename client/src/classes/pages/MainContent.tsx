@@ -9,6 +9,10 @@ import ErrorModal from "../../shared/Modals/ErrorModal";
 import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
 import CreateClassModal from "../components/createJoinClass/CreateClassModal";
 
+interface Props {
+  id: any;
+}
+
 const MainContent = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,13 +88,10 @@ const MainContent = () => {
                   ? card.description.slice(0, 30) + "..."
                   : card.description
               }
-              creator={card.creator.name}
               classCode={card.classCode}
-              id={card.id}
+              id={card._id}
+              creator={card.creator}
             />
-            // <>
-            //   <p>{loadedClass[0].title}</p>
-            // </>
           ))}
         </div>
         {/* {loadedClass} */}
