@@ -20,7 +20,7 @@ router.post(
   classesControllers.createClass
 ); // /api/classes/ ==> to create a new class
 
-router.post("/:cid", classesControllers.joinClass); // /api/classes/c1 ==> to join a class with id c1
+router.post("/join", classesControllers.joinClass); // /api/classes/join ==> to join a class with id c1
 
 router.delete("/:cid", classesControllers.deleteClass); // /api/classes/c1 ==> to delete a class with id c1
 

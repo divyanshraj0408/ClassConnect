@@ -9,6 +9,7 @@ const classSchema = new Schema({
   assignment: [
     { type: mongoose.Types.ObjectId, required: true, ref: "Assignment" },
   ],
+  members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.model("Class", classSchema);

@@ -5,7 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import Backdrop from "./Backdrop";
 import "./Modal.css";
 
-interface props {
+interface Props {
   className?: string;
   style?: object;
   headerClass?: string;
@@ -19,7 +19,7 @@ interface props {
   children?: any;
 }
 
-const ModalOverlay = (props: props) => {
+const ModalOverlay = (props: Props) => {
   const content = (
     <div className={`modal ${props.className}`} style={props.style}>
       <header className={`modal__header ${props.headerClass}`}>
@@ -45,7 +45,7 @@ const ModalOverlay = (props: props) => {
   );
 };
 
-const Modal = (props: props) => {
+const Modal = (props: Props) => {
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
