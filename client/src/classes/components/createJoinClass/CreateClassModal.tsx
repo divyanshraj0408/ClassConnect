@@ -17,7 +17,6 @@ interface props {
 }
 
 const CreateClassModal = (props: props) => {
-  const userId = useParams().uid;
   const CreateClass = useContext(CreateClassContext);
   const [formState, inputHandler] = useForm(
     {
@@ -41,6 +40,7 @@ const CreateClassModal = (props: props) => {
   const switchModeHandler = () => {
     setIsCreateMode((prevMode: any) => !prevMode);
   };
+  const userId = useParams().uid;
   const onSubmitHandler = async (event: any) => {
     event.preventDefault();
     if (isCreateMode) {
@@ -66,6 +66,24 @@ const CreateClassModal = (props: props) => {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      try {
+        const response = await fetch("http://localhost:5000/api/classes/join", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            classCode: formState.inputs.classcode.value,
+            userId: userId,
+          }),
+        });
+        const responseData = await response.json();
+        if (!response.ok) throw new Error(responseData.message);
+        CreateClass.create();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   return (
@@ -73,9 +91,9 @@ const CreateClassModal = (props: props) => {
       <form onSubmit={onSubmitHandler}>
         <Modal
           header={isCreateMode ? "Create a class" : "Join a class"}
-          show={props.visible}
+          show={!!props.onClear}
           onCancel={() => {
-            !!props.onClear;
+            props.onClear;
           }}
           footer={<Button onClick={props.onClear}>close</Button>}
         >
@@ -119,8 +137,12 @@ const CreateClassModal = (props: props) => {
               validators={[VALIDATOR_REQUIRE()]}
             ></Input>
           )}
-          <Button type="submit">Create Class</Button>
-          <Button onClick={switchModeHandler}>Switch to join class</Button>
+          <Button type="submit">
+            {isCreateMode ? "Create Class" : "Join Class"}
+          </Button>
+          <Button onClick={switchModeHandler}>
+            Switch to {isCreateMode ? "Join Class" : "Create Class"}
+          </Button>
         </Modal>
       </form>
     </>

@@ -22,22 +22,6 @@ const MainContent = () => {
   const handleClick = () => {
     setMenuVisibility(!menuVisibility);
   };
-  const CARDS = [
-    {
-      name: "LIC",
-      discription: "A course about integrated circuits",
-      creator: "u1",
-      classCode: "ec-321",
-      id: "c1",
-    },
-    {
-      name: "digital electronics",
-      discription: "A course about digital electronics",
-      creator: "u2",
-      classCode: "ec-322",
-      id: "c2",
-    },
-  ];
   const userId = useParams().uid;
   useEffect(() => {
     const sendRequest = async () => {
@@ -63,7 +47,7 @@ const MainContent = () => {
     setError(null);
   };
   const loadedClasses = loadedClass.filter(
-    (card: any) => card.creator === userId
+    (card: any) => card.creator || card.member === userId
   );
 
   return (
