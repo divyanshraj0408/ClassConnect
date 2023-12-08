@@ -1,63 +1,50 @@
 import { useParams } from "react-router-dom";
-
-import Input from "../../shared/Input/Input";
-
-import { VALIDATOR_REQUIRE } from "../../shared/util/Validator";
+import { useState, useEffect } from "react";
+import Navbar from "../../shared/Navbar/Navbar";
 import "./Assignments.css";
 
 const Assignments = () => {
-  const ASSIGNMENTS = [
-    {
-      id: 1,
-      classId: "c1",
-      title: "Announcement",
-      description:
-        "As you would be aware, the National Institute of Electronics and Information Technology (NIELIT) is an autonomous scientific society of the Ministry of Electronics & Information Technology (MeitY), Government of India, and has its presence at 47 locations across India, which offers Degree/Diploma and Skill Oriented courses in the area of Information, Electronics and Communication Technology (IECT). ",
-      dueDate: "2021-10-10",
-      points: 100,
-      status: "Not Submitted",
-    },
-    {
-      id: 1,
-      classId: "c1",
-      title: "Assignment 1",
-      description: "This is the first assignment",
-      dueDate: "2021-10-10",
-      points: 100,
-      status: "Not Submitted",
-    },
-    {
-      id: 1,
-      classId: "c2",
-      title: "Assignment 1",
-      description: "This is the first assignment",
-      dueDate: "2021-10-10",
-      points: 100,
-      status: "Not Submitted",
-    },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [assignments, setAssignments] = useState([]);
 
   const classId = useParams().cid;
-  const loadedAssignments = ASSIGNMENTS.filter(
-    (assignment) => assignment.classId === classId
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/api/assignments");
+
+        const responseData = await response.json();
+        console.log(responseData);
+        setAssignments(responseData.assignments);
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+      } catch (err: any) {
+        setError(err.message);
+      }
+      setIsLoading(false);
+    };
+    sendRequest();
+  }, []);
+
+  const requiredAssignment = assignments.filter(
+    (assignment: any) => assignment.classId === classId
   );
   return (
     <div>
-      <div>
-        <Input
-          element="input"
-          id="assignment"
-          label="Assignment"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid assignment"
-          onInput={() => {}}
-        ></Input>
-      </div>
       <div className="assignments contianer">
-        <h1>Assignments</h1>
+        <Navbar
+          logo="Assignments"
+          handleClick={() => {}}
+          text="Add Assignments"
+        />
         <div className="assignments-container">
-          {loadedAssignments.map((assignment) => (
-            <div className="assignment-card" key={assignment.id}>
+          {requiredAssignment.map((assignment: any) => (
+            // <h2>{assignment.title}</h2>
+            <div className="assignment-card" key={assignment._id}>
               <div className="assignment-card-header">
                 <h2>{assignment.title}</h2>
                 <h3>{assignment.status}</h3>
