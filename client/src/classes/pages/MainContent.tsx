@@ -7,7 +7,7 @@ import "./MainContent.css";
 // import Modal from "../../shared/Modals/Modal";
 import ErrorModal from "../../shared/Modals/ErrorModal";
 import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
-import CreateClassModal from "../components/createJoinClass/CreateClassModal";
+import CreateClassModal from "../components/classModal/ClassModal";
 
 interface Props {
   id: any;
