@@ -44,7 +44,6 @@ const CreateClassModal = (props: props) => {
   const onSubmitHandler = async (event: any) => {
     event.preventDefault();
     if (isCreateMode) {
-      console.log("create");
       try {
         const response = await fetch("http://localhost:5000/api/classes/", {
           method: "POST",

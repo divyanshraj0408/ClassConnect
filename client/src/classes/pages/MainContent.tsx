@@ -78,7 +78,6 @@ const MainContent = () => {
             />
           ))}
         </div>
-        {/* {loadedClass} */}
       </div>
     </div>
   );
