@@ -79,7 +79,6 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        console.log(responseData.userId);
         const userId = responseData.userId;
         navigate(`/${userId}/classes`);
         setIsLoading(false);
@@ -107,8 +106,6 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        console.log(responseData);
-
         setIsLoading(false);
         auth.login();
       } catch (err: any) {

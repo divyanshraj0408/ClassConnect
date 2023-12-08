@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "../../shared/Navbar/Navbar";
+import AssignmentModal from "../components/assignmentsModal/AssignmentModal";
 import "./Assignments.css";
 
 const Assignments = () => {
+  const [menuVisibility, setMenuVisibility] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [assignments, setAssignments] = useState([]);
@@ -15,9 +17,7 @@ const Assignments = () => {
       setIsLoading(true);
       try {
         const response = await fetch("http://localhost:5000/api/assignments");
-
         const responseData = await response.json();
-        console.log(responseData);
         setAssignments(responseData.assignments);
         if (!response.ok) {
           throw new Error(responseData.message);
@@ -33,17 +33,29 @@ const Assignments = () => {
   const requiredAssignment = assignments.filter(
     (assignment: any) => assignment.classId === classId
   );
+
+  const handleAssignments = () => {
+    setMenuVisibility(!menuVisibility);
+  };
   return (
     <div>
       <div className="assignments contianer">
         <Navbar
           logo="Assignments"
-          handleClick={() => {}}
+          handleClick={handleAssignments}
           text="Add Assignments"
         />
+        {menuVisibility && (
+          <AssignmentModal
+            onClear={() => {
+              setMenuVisibility(!menuVisibility);
+            }}
+            visible={menuVisibility}
+          />
+        )}
+
         <div className="assignments-container">
           {requiredAssignment.map((assignment: any) => (
-            // <h2>{assignment.title}</h2>
             <div className="assignment-card" key={assignment._id}>
               <div className="assignment-card-header">
                 <h2>{assignment.title}</h2>
