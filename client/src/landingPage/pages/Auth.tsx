@@ -79,10 +79,10 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        const userId = responseData.userId;
+        const userId = responseData.user.id;
         navigate(`/${userId}/classes`);
         setIsLoading(false);
-        auth.login();
+        auth.login(responseData.user.id);
       } catch (err: any) {
         console.log(err);
         setIsLoading(false);
@@ -107,7 +107,7 @@ const Auth = () => {
           throw new Error(responseData.message);
         }
         setIsLoading(false);
-        auth.login();
+        auth.login(responseData.user.id);
       } catch (err: any) {
         console.log(err);
         setIsLoading(false);

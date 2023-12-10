@@ -3,9 +3,8 @@
   gap: 20px;
   height: 100%;
 }
-.landing-page {
-  background-image: url(../assets/wave.svg);
-}
+
 .landing-page__header-image img {
-  width: 50rem;
+  filter: drop-shadow(16px 16px 20px blue);
+  max-width: 100%;
 }

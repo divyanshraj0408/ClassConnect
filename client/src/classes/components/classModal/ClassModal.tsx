@@ -62,6 +62,7 @@ const CreateClassModal = (props: props) => {
           throw new Error(responseData.message);
         }
         CreateClass.create();
+        props.onClear();
       } catch (err) {
         console.log(err);
       }
@@ -91,9 +92,6 @@ const CreateClassModal = (props: props) => {
         <Modal
           header={isCreateMode ? "Create a class" : "Join a class"}
           show={!!props.onClear}
-          onCancel={() => {
-            props.onClear;
-          }}
           footer={<Button onClick={props.onClear}>close</Button>}
         >
           {isCreateMode && (
