@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "../../../shared/hooks/form-hook";
 import { CreateClassContext } from "../../../shared/context/createClass-context";
+import { AuthContext } from "../../../shared/context/auth-context";
 
 import {
   VALIDATOR_MINLENGTH,
@@ -18,6 +19,7 @@ interface props {
 
 const AssignmentModal = (props: props) => {
   const CreateClass = useContext(CreateClassContext);
+  const auth = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -46,7 +48,7 @@ const AssignmentModal = (props: props) => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
           classId: cid,
-          creator: "655f8950881d35e92dc739d4",
+          creator: auth.userId,
         }),
       });
       const responseData = await response.json();
