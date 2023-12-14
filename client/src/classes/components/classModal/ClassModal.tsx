@@ -52,7 +52,7 @@ const CreateClassModal = (props: props) => {
           },
           body: JSON.stringify({
             title: formState.inputs.classname.value,
-            description: formState.inputs.discription.value,
+            description: formState.inputs.description.value,
             creator: userId,
             classCode: formState.inputs.subject.value,
           }),
@@ -61,8 +61,8 @@ const CreateClassModal = (props: props) => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        CreateClass.create();
         props.onClear();
+        CreateClass.create();
       } catch (err) {
         console.log(err);
       }
@@ -85,6 +85,7 @@ const CreateClassModal = (props: props) => {
         console.log(err);
       }
     }
+    fetch("http://localhost:5000/api/classes");
   };
   return (
     <>
@@ -107,10 +108,10 @@ const CreateClassModal = (props: props) => {
           {isCreateMode && (
             <Input
               element="textarea"
-              label="discription"
-              id="discription"
+              label="description"
+              id="description"
               onInput={inputHandler}
-              errorText="enter a disciption"
+              errorText="enter a description"
               validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(10)]}
             ></Input>
           )}
@@ -137,7 +138,7 @@ const CreateClassModal = (props: props) => {
           <Button type="submit">
             {isCreateMode ? "Create Class" : "Join Class"}
           </Button>
-          <Button onClick={switchModeHandler}>
+          <Button type="button" onClick={switchModeHandler} inverse>
             Switch to {isCreateMode ? "Join Class" : "Create Class"}
           </Button>
         </Modal>
