@@ -1,6 +1,6 @@
 .cards__component {
   background-color: var(--primary);
-  color: var(--secondary);
+  color: var(--text);
   max-width: 300px;
   width: 100%;
   height: 300px;
@@ -13,10 +13,10 @@
   flex-direction: column;
 }
 .cards__component:hover {
-  background-color: var(--accent);
-  color: var(--primary);
+  background-color: #a5d6a7;
+  color: var(--text);
   cursor: pointer;
-  transform: scale(1.05);
+  transform: scale(1);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
 }

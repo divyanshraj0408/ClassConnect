@@ -4,6 +4,7 @@
   border-radius: 6px;
   padding: 1rem;
   overflow: hidden;
-  background: white;
+  background: var(--primary);
+  border: 2px solid var(--accent);
   text-align: center;
 }

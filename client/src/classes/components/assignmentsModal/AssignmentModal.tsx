@@ -55,6 +55,7 @@ const AssignmentModal = (props: props) => {
       if (!response.ok) {
         throw new Error(responseData.message);
       }
+      props.onClear();
       CreateClass.create();
     } catch (err) {
       console.log(err);
@@ -71,7 +72,6 @@ const AssignmentModal = (props: props) => {
           }}
           footer={<Button onClick={props.onClear}>close</Button>}
         >
-          {cid}
           {
             <Input
               element="input"
