@@ -11,3 +11,6 @@
     flex-direction: column;
   }
 }
+.navbar-logo {
+  width: 80px;
+}

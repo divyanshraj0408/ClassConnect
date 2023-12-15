@@ -125,7 +125,6 @@ const joinClass = async (req, res, next) => {
       return next(error);
     }
 
-    // Find the class by its code
     classToJoin = await Class.findById(classCode);
 
     if (!classToJoin) {
@@ -136,7 +135,6 @@ const joinClass = async (req, res, next) => {
       return next(error);
     }
 
-    // Check if the user is already in the class
     if (user.classes.includes(classToJoin._id)) {
       const error = new HttpError(
         "User is already a member of this class.",
@@ -148,7 +146,6 @@ const joinClass = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
 
-    // Add the user to the class and the class to the user
     user.classes.push(classToJoin);
     classToJoin.members.push(user);
 

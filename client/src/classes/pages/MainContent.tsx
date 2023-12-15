@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 
 import Navbar from "../../shared/Navbar/Navbar";
 import Cards from "../components/cards/Cards";
+import logo from "../../landingPage/assets/logo/svg/logo-no-background.svg";
 import "./MainContent.css";
-// import Modal from "../../shared/Modals/Modal";
 import ErrorModal from "../../shared/Modals/ErrorModal";
 import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
 import CreateClassModal from "../components/classModal/ClassModal";
+import Button from "../../shared/button/Button";
 
 interface Props {
   id: any;
@@ -30,8 +31,8 @@ const MainContent = () => {
         const response = await fetch("http://localhost:5000/api/classes");
 
         const responseData = await response.json();
-        // console.log(responseData.classes.title);
         setLoadedClass(responseData.classes);
+        console.log(responseData.classes);
         if (!response.ok) {
           throw new Error(responseData.message);
         }
@@ -47,12 +48,16 @@ const MainContent = () => {
     setError(null);
   };
   const loadedClasses = loadedClass.filter(
-    (card: any) => card.creator || card.member === userId
+    (card: any) => card.members.includes(userId) || card.creator === userId
   );
 
   return (
     <div>
-      <Navbar logo="Logo" handleClick={handleClick} text="Add Classes" />
+      <Navbar
+        logo={<img src={logo} alt="" className="navbar-logo" />}
+        handleClick={handleClick}
+        text="Add Classes"
+      />
       <div className="container">
         {menuVisibility && (
           <CreateClassModal
