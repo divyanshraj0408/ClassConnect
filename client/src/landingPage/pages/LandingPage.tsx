@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../shared/Navbar/Navbar";
 import image from "../assets/Group 2.svg";
+import logo from "../assets/logo/svg/logo-no-background.svg";
 import "./LandingPage.css";
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -8,14 +9,13 @@ const LandingPage = () => {
   const handleClick = () => {
     navigate("/auth");
   };
-  // const imageStyle = {
-  //   filter: "drop-shadow(16px 16px 20px blue)",
-  //   maxWidth: "100%",
-  //   float: "right",
-  // };
   return (
     <div>
-      <Navbar logo="Logo" handleClick={handleClick} text="Get started" />
+      <Navbar
+        logo={<img src={logo} alt="" className="navbar-logo" />}
+        handleClick={handleClick}
+        text="Get started"
+      ></Navbar>
       <div className="landing-page container">
         <div className="landing-page__header">
           <div>

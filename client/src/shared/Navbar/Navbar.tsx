@@ -4,7 +4,7 @@ import "./Navbar.css";
 interface NavbarProps {
   logo?: React.ReactNode;
   handleClick: () => void;
-  text: string;
+  text?: any;
 }
 const Navbar = (props: NavbarProps) => {
   return (
