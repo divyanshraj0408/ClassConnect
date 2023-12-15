@@ -15,7 +15,7 @@ const LandingPage = () => {
   // };
   return (
     <div>
-      <Navbar logo="Logo" handleClick={handleClick} text="Login/Signup" />
+      <Navbar logo="Logo" handleClick={handleClick} text="Get started" />
       <div className="landing-page container">
         <div className="landing-page__header">
           <div>
