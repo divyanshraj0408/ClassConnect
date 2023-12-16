@@ -80,12 +80,12 @@ const CreateClassModal = (props: props) => {
         });
         const responseData = await response.json();
         if (!response.ok) throw new Error(responseData.message);
+        props.onClear();
         CreateClass.create();
       } catch (err) {
         console.log(err);
       }
     }
-    fetch("http://localhost:5000/api/classes");
   };
   return (
     <>
