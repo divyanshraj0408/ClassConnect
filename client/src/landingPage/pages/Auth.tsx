@@ -1,17 +1,20 @@
-import { useState, useContext } from "react";
-import Input from "../../shared/Input/Input";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import Input from "../../shared/Input/Input";
+import Button from "../../shared/button/Button";
+import Card from "../../shared/card/Card";
+import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
+import ErrorModal from "../../shared/Modals/ErrorModal";
+
+import { useForm } from "../../shared/hooks/form-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from "../../shared/util/Validator";
-import Button from "../../shared/button/Button";
-import Card from "../../shared/card/Card";
-import { useForm } from "../../shared/hooks/form-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import ErrorModal from "../../shared/Modals/ErrorModal";
-import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
+
 import "./Auth.css";
 
 const Auth = () => {
@@ -63,16 +66,19 @@ const Auth = () => {
     setIsLoading(true);
     if (isLoginMode) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-        });
+        const response = await fetch(
+          import.meta.env.VITE_REACT_APP_SERVER_URL + "/users/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: formState.inputs.email.value,
+              password: formState.inputs.password.value,
+            }),
+          }
+        );
 
         const responseData = await response.json();
 
@@ -90,17 +96,20 @@ const Auth = () => {
       }
     } else {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/users/signup`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formState.inputs.name.value,
+              email: formState.inputs.email.value,
+              password: formState.inputs.password.value,
+            }),
+          }
+        );
 
         const responseData = await response.json();
         if (!response.ok) {
@@ -108,6 +117,7 @@ const Auth = () => {
         }
         setIsLoading(false);
         auth.login(responseData.user.id);
+        navigate(`/${responseData.user.id}/classes`);
       } catch (err: any) {
         console.log(err);
         setIsLoading(false);

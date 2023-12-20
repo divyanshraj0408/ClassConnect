@@ -11,6 +11,7 @@ const Assignments = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [assignments, setAssignments] = useState([]);
+  const [className, setClassName] = useState("");
 
   const classId = useParams().cid;
 
@@ -18,7 +19,9 @@ const Assignments = () => {
     const sendRequest = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:5000/api/assignments");
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments`
+        );
         const responseData = await response.json();
         setAssignments(responseData.assignments);
         if (!response.ok) {
