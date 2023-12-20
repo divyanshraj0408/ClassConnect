@@ -4,7 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 
 import LandingPage from "./landingPage/pages/LandingPage";
 import MainContent from "./classes/pages/MainContent";
@@ -14,6 +14,7 @@ import { AuthContext } from "./shared/context/auth-context.tsx";
 import "./App.css";
 
 function App() {
+  const auth = useContext(AuthContext);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const login = useCallback((uid: string) => {
@@ -42,7 +43,10 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/:uid/classes" element={<MainContent />} />
               <Route path="/:cid/assignments" element={<Assignments />} />
-              <Route path="*" element={<Navigate to="/:uid/classes" />} />
+              <Route
+                path="*"
+                element={<Navigate to={`/${auth.userId}/classes`} />}
+              />
             </>
           )}
 

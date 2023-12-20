@@ -1,12 +1,13 @@
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
+
 import Modal from "../../../shared/Modals/Modal";
 import Button from "../../../shared/button/Button";
 import Input from "../../../shared/Input/Input";
-import { useParams } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+
 import { useForm } from "../../../shared/hooks/form-hook";
 import { CreateClassContext } from "../../../shared/context/createClass-context";
 import { AuthContext } from "../../../shared/context/auth-context";
-
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
@@ -39,24 +40,28 @@ const AssignmentModal = (props: props) => {
   const onSubmitHandler = async (event: any) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/assignments/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          classId: cid,
-          creator: auth.userId,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: formState.inputs.title.value,
+            description: formState.inputs.description.value,
+            classId: cid,
+            creator: auth.userId,
+          }),
+        }
+      );
       const responseData = await response.json();
       if (!response.ok) {
         throw new Error(responseData.message);
       }
       props.onClear();
-      CreateClass.create();
+      CreateClass.create(responseData.createdClass.className);
+      console.log(responseData.createdClass.className);
     } catch (err) {
       console.log(err);
     }

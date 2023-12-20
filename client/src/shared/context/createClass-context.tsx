@@ -2,11 +2,11 @@ import { createContext } from "react";
 
 type createContextType = {
   isJoined: boolean;
-  join: () => void;
-  create: () => void;
+  join: (className: string, creator: string) => void;
+  create: (className: string) => void;
 };
 export const CreateClassContext = createContext<createContextType>({
   isJoined: false,
-  join: () => {},
-  create: () => {},
+  join: (className: string, creator: string) => {},
+  create: (className: string) => {},
 });
