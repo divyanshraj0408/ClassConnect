@@ -1,10 +1,14 @@
 const express = require("express");
 const { check } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
 const classesControllers = require("../controllers/classes-controller");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 router.get("/", classesControllers.getClasses); // /api/classes/ ==> to get all classes
 

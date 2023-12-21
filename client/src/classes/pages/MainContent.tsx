@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../../shared/Navbar/Navbar";
@@ -7,6 +7,7 @@ import Cards from "../components/cards/Cards";
 import ErrorModal from "../../shared/Modals/ErrorModal";
 import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
 import CreateClassModal from "../components/classModal/ClassModal";
+import { AuthContext } from "../../shared/context/auth-context";
 
 import logo from "../../landingPage/assets/logo/svg/logo-no-background.svg";
 import "./MainContent.css";
@@ -16,6 +17,7 @@ const MainContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined || null || String);
   const [loadedClass, setLoadedClass] = useState([]);
+  const auth = useContext(AuthContext);
 
   const handleClick = () => {
     setMenuVisibility(!menuVisibility);
@@ -26,10 +28,16 @@ const MainContent = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/classes`
+          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/classes`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
         );
 
         const responseData = await response.json();
+        console.log(responseData);
         setLoadedClass(responseData.classes);
         if (!response.ok) {
           throw new Error(responseData.message);

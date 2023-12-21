@@ -98,13 +98,9 @@ const createClass = async (req, res, next) => {
     );
     return next(error);
   }
-  res
-    .status(201)
-    .json({
-      createClass: createdClass,
-      message: "classCreated",
-      className: createdClass.title,
-    });
+  res.status(201).json({
+    createClass: createdClass,
+  });
 };
 
 const joinClass = async (req, res, next) => {

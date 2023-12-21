@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
 import Modal from "../../../shared/Modals/Modal";
@@ -44,9 +44,6 @@ const AssignmentModal = (props: props) => {
         `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments/`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({
             title: formState.inputs.title.value,
             description: formState.inputs.description.value,
@@ -60,8 +57,7 @@ const AssignmentModal = (props: props) => {
         throw new Error(responseData.message);
       }
       props.onClear();
-      CreateClass.create(responseData.createdClass.className);
-      console.log(responseData.createdClass.className);
+      CreateClass.create();
     } catch (err) {
       console.log(err);
     }
