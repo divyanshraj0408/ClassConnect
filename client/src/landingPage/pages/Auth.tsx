@@ -85,12 +85,10 @@ const Auth = () => {
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        const userId = responseData.user.id;
-        navigate(`/${userId}/classes`);
+        navigate(`/${responseData.userId}/classes`);
         setIsLoading(false);
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (err: any) {
-        console.log(err);
         setIsLoading(false);
         setError(err.message || "Something went wrong, please try again.");
       }
@@ -116,8 +114,8 @@ const Auth = () => {
           throw new Error(responseData.message);
         }
         setIsLoading(false);
-        auth.login(responseData.user.id);
-        navigate(`/${responseData.user.id}/classes`);
+        auth.login(responseData.userid, responseData.token);
+        navigate(`/${responseData.userId}/classes`);
       } catch (err: any) {
         console.log(err);
         setIsLoading(false);
@@ -133,6 +131,7 @@ const Auth = () => {
     <>
       <ErrorModal error={error} onClear={errorHandler} />
       <div className="Authpage container">
+        <h2>Your passwords are end to end encrypted 🙈</h2>
         <Card>
           {isLoading && <LoadingSpinner asOverlay />}
           <h2>Login required</h2>

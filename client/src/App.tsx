@@ -15,22 +15,24 @@ import "./App.css";
 
 function App() {
   const auth = useContext(AuthContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
-  const login = useCallback((uid: string) => {
-    setIsLoggedIn(true);
+
+  const login = useCallback((uid: string, token: any) => {
+    setToken(token);
     setUserId(uid);
   }, []);
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    // setUserId(null);
+    setToken(null);
+    setUserId(null);
   }, []);
 
   return (
     <Router>
       <AuthContext.Provider
         value={{
-          isLoggedIn: isLoggedIn,
+          isLoggedIn: !!token,
+          token: token,
           userId: userId,
           login: login,
           logout: logout,
@@ -38,7 +40,7 @@ function App() {
       >
         <Routes>
           {/* Routes for when the user is logged in */}
-          {isLoggedIn && (
+          {token && (
             <>
               <Route path="/" element={<LandingPage />} />
               <Route path="/:uid/classes" element={<MainContent />} />
@@ -51,7 +53,7 @@ function App() {
           )}
 
           {/* Routes for when the user is not logged in */}
-          {!isLoggedIn && (
+          {!token && (
             <>
               <Route path="/" element={<LandingPage />} />
               <Route path="/auth" element={<Auth />} />

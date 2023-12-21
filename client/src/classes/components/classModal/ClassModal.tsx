@@ -8,6 +8,7 @@ import ErrorModal from "../../../shared/Modals/ErrorModal";
 
 import { useForm } from "../../../shared/hooks/form-hook";
 import { CreateClassContext } from "../../../shared/context/createClass-context";
+import { AuthContext } from "../../../shared/context/auth-context";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
@@ -21,15 +22,15 @@ interface props {
 const CreateClassModal = (props: props) => {
   const [isCreateMode, setIsCreateMode] = useState(true);
   const [error, setError] = useState(undefined || null || String);
-
+  const auth = useContext(AuthContext);
   const CreateClass = useContext(CreateClassContext);
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
-      className: {
+      classname: {
         value: "",
         isValid: false,
       },
-      discription: {
+      description: {
         value: "",
         isValid: false,
       },
@@ -55,6 +56,7 @@ const CreateClassModal = (props: props) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
             },
             body: JSON.stringify({
               title: formState.inputs.classname.value,
@@ -65,11 +67,9 @@ const CreateClassModal = (props: props) => {
           }
         );
         const responseData = await response.json();
-        console.log(responseData.createClass._id);
         if (!response.ok) {
           throw new Error(responseData.message);
         }
-        // props.onClear();
         CreateClass.create();
         navigate(`/${responseData.createClass._id}/assignments`);
       } catch (err: any) {
@@ -83,6 +83,7 @@ const CreateClassModal = (props: props) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
             },
             body: JSON.stringify({
               classCode: formState.inputs.classcode.value,
@@ -94,6 +95,7 @@ const CreateClassModal = (props: props) => {
         if (!response.ok) throw new Error(responseData.message);
         props.onClear();
         CreateClass.create();
+        navigate(`/${responseData.createClass._id}/assignments`);
       } catch (err: any) {
         console.log(err.message);
         setError(err.message);
@@ -117,6 +119,7 @@ const CreateClassModal = (props: props) => {
               element="input"
               label="ClassName"
               id="classname"
+              placeholder="classname"
               onInput={inputHandler}
               errorText="enter a classname"
               validators={[VALIDATOR_REQUIRE()]}
@@ -127,6 +130,7 @@ const CreateClassModal = (props: props) => {
               element="textarea"
               label="description"
               id="description"
+              placeholder="description"
               onInput={inputHandler}
               errorText="enter a description"
               validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(10)]}
@@ -137,6 +141,7 @@ const CreateClassModal = (props: props) => {
               element="input"
               label="Subject Name"
               id="subject"
+              placeholder="subject"
               onInput={inputHandler}
               errorText="enter the subject"
               validators={[VALIDATOR_REQUIRE()]}
@@ -147,12 +152,13 @@ const CreateClassModal = (props: props) => {
               element="input"
               label="Class Code"
               id="classcode"
+              placeholder="classcode"
               onInput={inputHandler}
               errorText="enter the class code"
               validators={[VALIDATOR_REQUIRE()]}
             ></Input>
           )}
-          <Button type="submit">
+          <Button type="submit" disabled={!formState.isValid}>
             {isCreateMode ? "Create Class" : "Join Class"}
           </Button>
           <Button type="button" onClick={switchModeHandler} inverse>
