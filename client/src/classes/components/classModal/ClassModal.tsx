@@ -24,7 +24,7 @@ const CreateClassModal = (props: props) => {
   const [error, setError] = useState(undefined || null || String);
   const auth = useContext(AuthContext);
   const CreateClass = useContext(CreateClassContext);
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       classname: {
         value: "",
@@ -103,7 +103,7 @@ const CreateClassModal = (props: props) => {
     }
   };
   const errorHandler = () => {
-    setError(undefined);
+    setError("");
   };
   return (
     <>

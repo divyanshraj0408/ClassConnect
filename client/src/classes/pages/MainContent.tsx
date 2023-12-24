@@ -37,7 +37,6 @@ const MainContent = () => {
         );
 
         const responseData = await response.json();
-        console.log(responseData);
         setLoadedClass(responseData.classes);
         if (!response.ok) {
           throw new Error(responseData.message);
@@ -51,7 +50,7 @@ const MainContent = () => {
   }, []);
 
   const errorHandler = () => {
-    setError(undefined);
+    setError("");
   };
   const loadedClasses = loadedClass.filter(
     (card: any) => card.members.includes(userId) || card.creator === userId

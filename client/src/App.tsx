@@ -4,7 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useState, useCallback, useContext, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import LandingPage from "./landingPage/pages/LandingPage";
 import MainContent from "./classes/pages/MainContent";
@@ -14,7 +14,6 @@ import { AuthContext } from "./shared/context/auth-context.tsx";
 import "./App.css";
 
 function App() {
-  const auth = useContext(AuthContext);
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState("");
 
@@ -29,7 +28,6 @@ function App() {
 
   useEffect(() => {
     const storedDataString = localStorage.getItem("userData");
-    // console.log(storedDataString ? storedDataString : "no sdata");
     const storedData = storedDataString ? JSON.parse(storedDataString) : null;
     if (storedData && storedData.token) {
       console.log(storedData.userId, storedData.token);

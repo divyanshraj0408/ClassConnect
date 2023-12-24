@@ -7,6 +7,6 @@ type createContextType = {
 };
 export const CreateClassContext = createContext<createContextType>({
   isJoined: false,
-  join: (className: string, creator: string) => {},
+  join: (_className: string, _creator: string) => {},
   create: () => {},
 });

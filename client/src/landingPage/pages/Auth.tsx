@@ -42,7 +42,7 @@ const Auth = () => {
     if (!isLoginMode) {
       setFormData(
         {
-          name: undefined,
+          name: { value: "", isValid: false },
           ...formState.inputs,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
@@ -125,7 +125,7 @@ const Auth = () => {
   };
 
   const errorHandler = () => {
-    setError(undefined);
+    setError("");
   };
   return (
     <>

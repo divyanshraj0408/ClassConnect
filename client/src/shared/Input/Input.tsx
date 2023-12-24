@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, ChangeEvent, FocusEvent } from "react";
+import React, { useReducer, useEffect, ChangeEvent } from "react";
 
 import { validate } from "../util/Validator";
 import "./Input.css";
