@@ -54,7 +54,7 @@ const Assignments = () => {
     setMenuVisibility(!menuVisibility);
   };
   const errorHandler = () => {
-    setError(undefined);
+    setError("");
   };
   return (
     <div>
