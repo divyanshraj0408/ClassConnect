@@ -2,6 +2,7 @@
     "env":{
         "DB_USER" : "divyanshraj0408",
         "DB_PASSWORD" : "u9RCthNP-$g!8dY",
-        "DB_NAME" : "classConnect"
+        "DB_NAME" : "classConnect",
+        "JWT_TOKEN":"keXU515$CdO{H@{XEP{!U~j~MG"
     }
 }
