@@ -4,7 +4,13 @@ EduConnect is a web application that aims to provide a platform similar to Googl
 
 ## Table of Contents
 
+- [Technologies used](#technologiesUsed)
 - [Features](#features)
+
+## Technologies used
+   - Typescript/react
+   - nodejs
+   - mongodb
 
 ## Features
 
