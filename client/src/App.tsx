@@ -4,7 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useState, useCallback, useContext } from "react";
+import { useState, useCallback, useContext, useEffect } from "react";
 
 import LandingPage from "./landingPage/pages/LandingPage";
 import MainContent from "./classes/pages/MainContent";
@@ -15,16 +15,31 @@ import "./App.css";
 
 function App() {
   const auth = useContext(AuthContext);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const [userId, setUserId] = useState("");
 
   const login = useCallback((uid: string, token: any) => {
     setToken(token);
     setUserId(uid);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: uid, token: token })
+    );
   }, []);
+
+  useEffect(() => {
+    const storedDataString = localStorage.getItem("userData");
+    // console.log(storedDataString ? storedDataString : "no sdata");
+    const storedData = storedDataString ? JSON.parse(storedDataString) : null;
+    if (storedData && storedData.token) {
+      console.log(storedData.userId, storedData.token);
+      login(storedData.userId, storedData.token);
+    }
+  }, [login]);
   const logout = useCallback(() => {
     setToken(null);
-    setUserId(null);
+    setUserId("");
+    localStorage.removeItem("userData");
   }, []);
 
   return (
@@ -47,7 +62,7 @@ function App() {
               <Route path="/:cid/assignments" element={<Assignments />} />
               <Route
                 path="*"
-                element={<Navigate to={`/${auth.userId}/classes`} />}
+                element={<Navigate to={`/${userId}/classes`} />}
               />
             </>
           )}
