@@ -44,6 +44,10 @@ const AssignmentModal = (props: props) => {
         `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments/`,
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
           body: JSON.stringify({
             title: formState.inputs.title.value,
             description: formState.inputs.description.value,
@@ -54,6 +58,7 @@ const AssignmentModal = (props: props) => {
       );
       const responseData = await response.json();
       if (!response.ok) {
+        console.log(response);
         throw new Error(responseData.message);
       }
       props.onClear();
@@ -76,8 +81,9 @@ const AssignmentModal = (props: props) => {
           {
             <Input
               element="input"
-              label="Title"
+              label="Title for assignment"
               id="title"
+              placeholder="Title"
               onInput={inputHandler}
               errorText="enter a title for assignment"
               validators={[VALIDATOR_REQUIRE()]}
@@ -88,13 +94,16 @@ const AssignmentModal = (props: props) => {
               element="textarea"
               label="description"
               id="description"
+              placeholder="Description"
               onInput={inputHandler}
               errorText="enter a description"
               validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(10)]}
             ></Input>
           }
 
-          <Button type="submit">Create Assignment</Button>
+          <Button type="submit" disabled={!formState.isValid}>
+            Create Assignment
+          </Button>
         </Modal>
       </form>
     </>
