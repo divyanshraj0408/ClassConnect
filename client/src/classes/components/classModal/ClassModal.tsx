@@ -158,7 +158,10 @@ const CreateClassModal = (props: props) => {
               validators={[VALIDATOR_REQUIRE()]}
             ></Input>
           )}
-          <Button type="submit" disabled={!formState.isValid}>
+          <Button
+            type="submit"
+            disabled={isCreateMode ? !formState.isValid : !formState.isValid}
+          >
             {isCreateMode ? "Create Class" : "Join Class"}
           </Button>
           <Button type="button" onClick={switchModeHandler} inverse>

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Modal from "../../../shared/Modals/Modal";
 import Button from "../../../shared/button/Button";
@@ -21,6 +21,7 @@ interface props {
 const AssignmentModal = (props: props) => {
   const CreateClass = useContext(CreateClassContext);
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -63,6 +64,7 @@ const AssignmentModal = (props: props) => {
       }
       props.onClear();
       CreateClass.create();
+      navigate(-1);
     } catch (err) {
       console.log(err);
     }
