@@ -1,18 +1,20 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Navbar from "../../shared/Navbar/Navbar";
 import AssignmentModal from "../components/assignmentsModal/AssignmentModal";
 import Button from "../../shared/button/Button";
+import { AuthContext } from "../../shared/context/auth-context";
 import "./Assignments.css";
+import LoadingSpinner from "../../shared/Loading/LoadingSpinner";
+import ErrorModal from "../../shared/Modals/ErrorModal";
 
 const Assignments = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [assignments, setAssignments] = useState([]);
-  const [className, setClassName] = useState("");
-
+  const auth = useContext(AuthContext);
   const classId = useParams().cid;
 
   useEffect(() => {
@@ -20,9 +22,17 @@ const Assignments = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments`
+          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/assignments`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
         const responseData = await response.json();
+        console.log(responseData);
         setAssignments(responseData.assignments);
         if (!response.ok) {
           throw new Error(responseData.message);
@@ -42,8 +52,13 @@ const Assignments = () => {
   const handleAssignments = () => {
     setMenuVisibility(!menuVisibility);
   };
+  const errorHandler = () => {
+    setError(undefined);
+  };
   return (
     <div>
+      <ErrorModal error={error} onClear={errorHandler} />
+      {isLoading && <LoadingSpinner asOverlay />}
       <div className="assignments contianer">
         <Navbar
           logo="Assignments"

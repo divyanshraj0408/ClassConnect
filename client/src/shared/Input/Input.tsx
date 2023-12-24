@@ -92,6 +92,7 @@ const Input: React.FC<InputProps> = (props) => {
       <textarea
         id={props.id}
         rows={props.rows || 3}
+        placeholder={props.placeholder}
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
