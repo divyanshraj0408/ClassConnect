@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 
 import Navbar from "../../shared/Navbar/Navbar";
@@ -16,6 +16,7 @@ const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
   const auth = useContext(AuthContext);
   const classId = useParams().cid;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const sendRequest = async () => {
@@ -73,7 +74,22 @@ const Assignments = () => {
             visible={menuVisibility}
           />
         )}
-
+        <div className="heroSection">
+          <Button
+            onClick={() => {
+              navigate(-1);
+            }}
+            inverse
+          >
+            {"< "}Back to classes
+          </Button>
+          <div>
+            <h3>Class Code:</h3>
+            <h3>
+              <span className="classCode">{classId}</span>
+            </h3>
+          </div>
+        </div>
         <div className="assignments-container">
           {requiredAssignment.length === 0 ? (
             <div style={{ textAlign: "center" }}>
