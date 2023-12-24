@@ -63,7 +63,7 @@ const userSignup = async (req, res, next) => {
         userId: createdUser.id,
         email: createdUser.email,
       },
-      "keXU515$CdO{H@{XEP{!U~j~MG",
+      process.env.JWT_TOKEN,
       { expiresIn: "1h" }
     );
   } catch (err) {
@@ -119,7 +119,7 @@ const userLogin = async (req, res, next) => {
         userId: existingUser.id,
         email: existingUser.email,
       },
-      "keXU515$CdO{H@{XEP{!U~j~MG",
+      process.env.JWT_TOKEN,
       { expiresIn: "1h" }
     );
   } catch (err) {
