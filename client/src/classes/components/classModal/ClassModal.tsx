@@ -160,7 +160,7 @@ const CreateClassModal = (props: props) => {
           )}
           <Button
             type="submit"
-            disabled={isCreateMode ? !formState.isValid : !formState.isValid}
+            disabled={isCreateMode ? !formState.isValid : false}
           >
             {isCreateMode ? "Create Class" : "Join Class"}
           </Button>
