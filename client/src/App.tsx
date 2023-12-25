@@ -13,32 +13,58 @@ import Auth from "./landingPage/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context.tsx";
 import "./App.css";
 
+let logoutTimer: any;
 function App() {
   const [token, setToken] = useState(null);
+  const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState("");
 
-  const login = useCallback((uid: string, token: any) => {
+  const login = useCallback((uid: string, token: any, expirationDate?: any) => {
     setToken(token);
     setUserId(uid);
+    const tokenExpirationDate =
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    setTokenExpirationDate(tokenExpirationDate);
     localStorage.setItem(
       "userData",
-      JSON.stringify({ userId: uid, token: token })
+      JSON.stringify({
+        userId: uid,
+        token: token,
+        expiration: tokenExpirationDate.toISOString(),
+      })
     );
   }, []);
+  const logout = useCallback(() => {
+    setToken(null);
+    setTokenExpirationDate(undefined);
+    setUserId("");
+    localStorage.removeItem("userData");
+  }, []);
+  useEffect(() => {
+    if (token && tokenExpirationDate) {
+      const remainingTime =
+        (tokenExpirationDate as Date).getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [token, logout, tokenExpirationDate]);
 
   useEffect(() => {
     const storedDataString = localStorage.getItem("userData");
     const storedData = storedDataString ? JSON.parse(storedDataString) : null;
-    if (storedData && storedData.token) {
-      console.log(storedData.userId, storedData.token);
-      login(storedData.userId, storedData.token);
+    if (
+      storedData &&
+      storedData.token &&
+      new Date(storedData.expiration) > new Date()
+    ) {
+      login(
+        storedData.userId,
+        storedData.token,
+        new Date(storedData.expiration)
+      );
     }
   }, [login]);
-  const logout = useCallback(() => {
-    setToken(null);
-    setUserId("");
-    localStorage.removeItem("userData");
-  }, []);
 
   return (
     <Router>
