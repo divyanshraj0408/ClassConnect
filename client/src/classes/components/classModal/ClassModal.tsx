@@ -71,7 +71,7 @@ const CreateClassModal = (props: props) => {
           throw new Error(responseData.message);
         }
         CreateClass.create();
-        navigate(`/${responseData.createClass._id}/assignments`);
+        navigate(`/${responseData.createClass.id}/assignments`);
       } catch (err: any) {
         setError(err.message);
       }
@@ -92,10 +92,10 @@ const CreateClassModal = (props: props) => {
           }
         );
         const responseData = await response.json();
+        console.log(responseData);
         if (!response.ok) throw new Error(responseData.message);
-        props.onClear();
         CreateClass.create();
-        navigate(`/${responseData.createClass._id}/assignments`);
+        navigate(`/${responseData.class._id}/assignments`);
       } catch (err: any) {
         console.log(err.message);
         setError(err.message);

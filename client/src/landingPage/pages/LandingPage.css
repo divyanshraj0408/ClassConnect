@@ -1,5 +1,10 @@
 .landing-page__header {
   display: flex;
+  background-color: var(--primary);
+  margin-top: -20px;
+  padding: 20px;
+  /* text-align: center; */
+  align-items: center;
 }
 
 .landing-page__header-image img {
@@ -13,4 +18,15 @@
 }
 .navbar-logo {
   width: 80px;
+}
+.middleSection {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.middleSection Button {
+  height: 100px;
+  width: 700px;
 }
