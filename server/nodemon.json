@@ -1,8 +1,8 @@
 {
     "env":{
-        "DB_USER" : "divyanshraj0408",
-        "DB_PASSWORD" : "u9RCthNP-$g!8dY",
-        "DB_NAME" : "classConnect",
-        "JWT_TOKEN":"keXU515$CdO{H@{XEP{!U~j~MG"
+        "DB_USER" : "EXAMPLEUSER",
+        "DB_PASSWORD" : "EXAMPLEPASSWORD",
+        "DB_NAME" : "EXAMPLEDBNAME",
+        "JWT_TOKEN":"EXAMPLEJWTTOKEN"
     }
 }
