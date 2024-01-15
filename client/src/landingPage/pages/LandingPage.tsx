@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../shared/Navbar/Navbar";
 import image from "../assets/Group 2.svg";
 import logo from "../assets/logo/svg/logo-no-background.svg";
+import Button from "../../shared/button/Button";
 import "./LandingPage.css";
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -16,19 +17,22 @@ const LandingPage = () => {
         handleClick={handleClick}
         text="Get started"
       ></Navbar>
-      <div className="landing-page container">
+      <div className="landing-page">
         <div className="landing-page__header">
-          <div>
-            <h1>Lorem ipsum</h1>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima
-              recusandae unde nisi corrupti officiis quia, incidunt,
-              perspiciatis iste tempora non autem. Cum, iste? Possimus
-              accusantium, atque dolorum fugiat corporis praesentium?
-            </p>
-          </div>
-          <div className="landing-page__header-image">
-            <img src={image} alt="" />
+          <div className="container landing-page__header">
+            <div>
+              <h1>Class Connect</h1>
+              <p>
+                ClassConnect is a web application that aims to provide a
+                platform similar to Google Classroom, allowing teachers to
+                create classes, manage assignments, and interact with students
+                in a virtual classroom environment.
+              </p>
+              <Button onClick={handleClick}>Get started</Button>
+            </div>
+            <div className="landing-page__header-image">
+              <img src={image} alt="" />
+            </div>
           </div>
         </div>
       </div>
