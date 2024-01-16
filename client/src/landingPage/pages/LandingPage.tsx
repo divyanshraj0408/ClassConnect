@@ -3,6 +3,8 @@ import Navbar from "../../shared/Navbar/Navbar";
 import image from "../assets/Group 2.svg";
 import logo from "../assets/logo/svg/logo-no-background.svg";
 import Button from "../../shared/button/Button";
+import InfoSection from "../components/InfoSection";
+import Footer from "../components/Footer";
 import "./LandingPage.css";
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -36,6 +38,8 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+      <InfoSection />
+      <Footer />
     </div>
   );
 };

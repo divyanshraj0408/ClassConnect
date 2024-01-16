@@ -1,0 +1,14 @@
+.footer {
+  background-color: var(--primary);
+}
+.footer a img {
+  max-width: 25px;
+  margin-left: 3px;
+}
+.github-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
