@@ -3,7 +3,7 @@ interface LinkProps {
   text: string;
   handleClick: () => void;
 }
-const Link = (props: LinkProps) => {
+const LinkElement = (props: LinkProps) => {
   return (
     <>
       <button className="Link" onClick={props.handleClick}>
@@ -12,4 +12,4 @@ const Link = (props: LinkProps) => {
     </>
   );
 };
-export default Link;
+export default LinkElement;

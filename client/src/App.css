@@ -1,13 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
 :root {
-  --text: #fbf2fd;
-  --background: #031e2b;
-  --primary: #dbb0e3;
-  --secondary: #2f0138;
-  --accent: #a55db1;
+  --text: #231746;
+  --background: #ffffad;
+  --primary: #75efb2;
+  --secondary: #ffab9c;
+  --accent: #a5d6a7;
 }
 * {
-  font-family: poppins, "sans-serif";
+  font-family: Space Grotesk, "sans-serif";
 }
 body {
   background-color: var(--background);
@@ -19,4 +20,10 @@ body {
   margin: 0 auto;
   max-width: 1100px;
   max-width: 90%;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

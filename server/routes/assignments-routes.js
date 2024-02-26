@@ -2,8 +2,11 @@ const express = require("express");
 
 const HttpError = require("../models/http-error");
 const assignmentsControllers = require("../controllers/assignments-controller");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 router.get("/", assignmentsControllers.getAssignments); // /api/assignments/ ==> to get all assignments
 router.get("/:aid", assignmentsControllers.getAssignmentById); // /api/assignments/a1 ==> to get assignment with id a1
