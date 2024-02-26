@@ -23,3 +23,8 @@ ClassConnect is a web application that aims to provide a platform similar to Goo
 - Interactive class discussions. ✅
 - Notifications for new assignments and updates.
 - User-friendly and intuitive user interface. ✅
+
+## Architecture
+![image](https://github.com/divyanshraj0408/ClassConnect/assets/73312468/c1db1ea3-2710-464a-ae3d-1b1851d1150b)
+Backend APIs
+
