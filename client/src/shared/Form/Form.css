@@ -14,5 +14,8 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: aqua;
+  background-color: var(--primary);
+}
+.form__name {
+  color: var(--background);
 }

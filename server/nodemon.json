@@ -1,0 +1,8 @@
+{
+    "env":{
+        "DB_USER" : "EXAMPLEUSER",
+        "DB_PASSWORD" : "EXAMPLEPASSWORD",
+        "DB_NAME" : "EXAMPLEDBNAME",
+        "JWT_TOKEN":"EXAMPLEJWTTOKEN"
+    }
+}

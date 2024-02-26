@@ -1,0 +1,14 @@
+.logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.logoSection {
+  margin-top: 20px;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .logos {
+    flex-direction: column;
+  }
+}

@@ -1,10 +1,10 @@
 import React from "react";
-import Link from "../button/Link";
+import Link from "../button/LinkElement";
 import "./Navbar.css";
 interface NavbarProps {
   logo?: React.ReactNode;
   handleClick: () => void;
-  text: string;
+  text?: any;
 }
 const Navbar = (props: NavbarProps) => {
   return (
