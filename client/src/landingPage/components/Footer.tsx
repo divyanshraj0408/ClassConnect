@@ -5,7 +5,6 @@ const Footer = () => {
     <>
       <footer className="footer">
         <div className="container center">
-          <h3>Made with ❤️ by Divyansh</h3>
           <div className="github-footer">
             <span>Star us on github</span>
             <a href="https://www.github.com/divyanshraj0408/classconnect">
