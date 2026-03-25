@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Modal from "../../../shared/Modals/Modal";
@@ -14,162 +14,153 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../../shared/util/Validator";
 
-interface props {
-  onClear: any;
+interface CreateClassModalProps {
+  onClear: () => void;
   visible: boolean;
 }
 
-const CreateClassModal = (props: props) => {
-  const [isCreateMode, setIsCreateMode] = useState(true);
-  const [error, setError] = useState(undefined || null || String);
-  const auth = useContext(AuthContext);
+const CreateClassModal: React.FC<CreateClassModalProps> = ({ onClear, visible }) => {
+  const [isCreateMode, setIsCreateMode] = useState<boolean>(true);
+  const [error, setError]               = useState<string | null>(null);
+
+  const auth        = useContext(AuthContext);
   const CreateClass = useContext(CreateClassContext);
+  const navigate    = useNavigate();
+  const userId      = useParams<{ uid: string }>().uid;
+
   const [formState, inputHandler] = useForm(
     {
-      classname: {
-        value: "",
-        isValid: false,
-      },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      subject: {
-        value: "",
-        isValid: false,
-      },
+      classname:   { value: "", isValid: false },
+      description: { value: "", isValid: false },
+      subject:     { value: "", isValid: false },
     },
     false
   );
-  const navigate = useNavigate();
-  const switchModeHandler = () => {
-    setIsCreateMode((prevMode: any) => !prevMode);
-  };
-  const userId = useParams().uid;
-  const onSubmitHandler = async (event: any) => {
+
+  const switchModeHandler = (): void => setIsCreateMode((prev) => !prev);
+  const errorHandler      = (): void => setError(null);
+
+  const onSubmitHandler = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    if (isCreateMode) {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/classes`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth.token}`,
-            },
-            body: JSON.stringify({
-              title: formState.inputs.classname.value,
-              description: formState.inputs.description.value,
-              creator: userId,
-              classCode: formState.inputs.subject.value,
-            }),
-          }
-        );
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
+
+    const base = import.meta.env.VITE_REACT_APP_SERVER_URL as string;
+
+    try {
+      if (isCreateMode) {
+        const response = await fetch(`${base}/classes`, {
+          method:  "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:  `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify({
+            title:       formState.inputs.classname.value,
+            description: formState.inputs.description.value,
+            creator:     userId,
+            classCode:   formState.inputs.subject.value,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message);
         CreateClass.create();
-        navigate(`/${responseData.createClass.id}/assignments`);
-      } catch (err: any) {
-        setError(err.message);
-      }
-    } else {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_SERVER_URL}/classes/join`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth.token}`,
-            },
-            body: JSON.stringify({
-              classCode: formState.inputs.classcode.value,
-              userId: userId,
-            }),
-          }
-        );
-        const responseData = await response.json();
-        console.log(responseData);
-        if (!response.ok) throw new Error(responseData.message);
+        navigate(`/${data.createClass.id}/assignments`);
+      } else {
+        const response = await fetch(`${base}/classes/join`, {
+          method:  "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:  `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify({
+            classCode: formState.inputs.classcode?.value,
+            userId,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message);
         CreateClass.create();
-        navigate(`/${responseData.class._id}/assignments`);
-      } catch (err: any) {
-        console.log(err.message);
-        setError(err.message);
+        navigate(`/${data.class._id}/assignments`);
       }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong.";
+      setError(message);
     }
   };
-  const errorHandler = () => {
-    setError("");
-  };
+
   return (
     <>
       <ErrorModal error={error} onClear={errorHandler} />
+
       <form onSubmit={onSubmitHandler}>
         <Modal
           header={isCreateMode ? "Create a class" : "Join a class"}
-          show={!!props.onClear}
-          footer={<Button onClick={props.onClear}>close</Button>}
+          show={visible}
+          footer={
+            <Button type="button" onClick={onClear}>
+              Close
+            </Button>
+          }
         >
+          {/* ── Create mode fields ── */}
           {isCreateMode && (
-            <Input
-              element="input"
-              label="ClassName"
-              id="classname"
-              placeholder="classname"
-              onInput={inputHandler}
-              errorText="enter a classname"
-              validators={[VALIDATOR_REQUIRE()]}
-            ></Input>
+            <>
+              <Input
+                element="input"
+                label="Class name"
+                id="classname"
+                placeholder="e.g. Advanced Mathematics"
+                onInput={inputHandler}
+                errorText="Please enter a class name."
+                validators={[VALIDATOR_REQUIRE()]}
+              />
+              <Input
+                element="textarea"
+                label="Description"
+                id="description"
+                placeholder="What is this class about?"
+                onInput={inputHandler}
+                errorText="Description must be at least 10 characters."
+                validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(10)]}
+              />
+              <Input
+                element="input"
+                label="Subject / class code"
+                id="subject"
+                placeholder="e.g. MATH-101"
+                onInput={inputHandler}
+                errorText="Please enter a subject or code."
+                validators={[VALIDATOR_REQUIRE()]}
+              />
+            </>
           )}
-          {isCreateMode && (
-            <Input
-              element="textarea"
-              label="description"
-              id="description"
-              placeholder="description"
-              onInput={inputHandler}
-              errorText="enter a description"
-              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(10)]}
-            ></Input>
-          )}
-          {isCreateMode && (
-            <Input
-              element="input"
-              label="Subject Name"
-              id="subject"
-              placeholder="subject"
-              onInput={inputHandler}
-              errorText="enter the subject"
-              validators={[VALIDATOR_REQUIRE()]}
-            ></Input>
-          )}
+
+          {/* ── Join mode field ── */}
           {!isCreateMode && (
             <Input
               element="input"
-              label="Class Code"
+              label="Class code"
               id="classcode"
-              placeholder="classcode"
+              placeholder="Ask your teacher for the code"
               onInput={inputHandler}
-              errorText="enter the class code"
+              errorText="Please enter the class code."
               validators={[VALIDATOR_REQUIRE()]}
-            ></Input>
+            />
           )}
+
           <Button
             type="submit"
             disabled={isCreateMode ? !formState.isValid : false}
           >
-            {isCreateMode ? "Create Class" : "Join Class"}
+            {isCreateMode ? "Create class" : "Join class"}
           </Button>
+
           <Button type="button" onClick={switchModeHandler} inverse>
-            Switch to {isCreateMode ? "Join Class" : "Create Class"}
+            Switch to {isCreateMode ? "Join a class" : "Create a class"}
           </Button>
         </Modal>
       </form>
     </>
   );
 };
+
 export default CreateClassModal;

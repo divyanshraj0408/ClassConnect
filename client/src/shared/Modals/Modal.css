@@ -1,59 +1,210 @@
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --modal-bg:        #111827;
+  --modal-border:    rgba(255, 255, 255, 0.08);
+  --modal-accent:    #4f8ef7;
+  --modal-accent-2:  #a78bfa;
+  --modal-text:      #e2e8f0;
+  --modal-muted:     #94a3b8;
+  --modal-radius:    16px;
+  --modal-shadow:    0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --modal-font-head: "Fraunces", Georgia, serif;
+  --modal-font-body: "DM Sans", system-ui, sans-serif;
+}
+
+/* ── Overlay shell ─────────────────────────────────────────────────────────── */
 .modal {
-  z-index: 100;
+  z-index: 200;
   position: fixed;
-  top: 22vh;
-  left: 10%;
-  width: 80%;
-  background: var(--primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 8px;
-  color: var(--text);
-}
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 2rem);
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  color: var(--modal-text);
+  font-family: var(--modal-font-body);
 
+  /* custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+.modal::-webkit-scrollbar       { width: 4px; }
+.modal::-webkit-scrollbar-track { background: transparent; }
+.modal::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
 .modal__header {
-  width: 100%;
-  padding: 1rem 0rem;
-  background: var(--text);
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--modal-border);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.modal__header h2 {
-  margin: 0.5rem;
+.modal__title {
+  font-family: var(--modal-font-head);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+  background: linear-gradient(90deg, var(--modal-accent), var(--modal-accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+/* ── Content area ──────────────────────────────────────────────────────────── */
 .modal__content {
-  padding: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
+/* Style inputs rendered inside the modal */
+.modal__content label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--modal-muted);
+  margin-bottom: 0.4rem;
+}
+
+.modal__content input,
+.modal__content textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--modal-border);
+  border-radius: 10px;
+  color: var(--modal-text);
+  font-family: var(--modal-font-body);
+  font-size: 0.9rem;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.modal__content input::placeholder,
+.modal__content textarea::placeholder {
+  color: rgba(148, 163, 184, 0.45);
+}
+.modal__content input:focus,
+.modal__content textarea:focus {
+  border-color: var(--modal-accent);
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
+}
+
+/* Submit + action buttons inside modal */
+.modal__content button[type="submit"],
+.modal__content button[type="button"] {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  border: none;
+  font-family: var(--modal-font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+}
+
+.modal__content button[type="submit"] {
+  background: linear-gradient(135deg, var(--modal-accent), var(--modal-accent-2));
+  color: #fff;
+  box-shadow: 0 0 24px rgba(79, 142, 247, 0.28);
+}
+.modal__content button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 36px rgba(79, 142, 247, 0.45);
+}
+.modal__content button[type="submit"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.modal__content button[type="button"] {
+  background: transparent;
+  border: 1px solid var(--modal-border);
+  color: var(--modal-muted);
+}
+.modal__content button[type="button"]:hover {
+  border-color: var(--modal-accent);
+  color: var(--modal-accent);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
 .modal__footer {
-  padding: 1rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--modal-border);
+  background: rgba(255, 255, 255, 0.01);
 }
 
-@media (min-width: 768px) {
-  .modal {
-    left: calc(50% - 20rem);
-    width: 40rem;
-  }
+.modal__footer button {
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--modal-border);
+  background: transparent;
+  color: var(--modal-muted);
+  font-family: var(--modal-font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+.modal__footer button:hover {
+  border-color: var(--modal-accent);
+  color: var(--modal-accent);
 }
 
+/* ── CSSTransition animations ──────────────────────────────────────────────── */
 .modal-enter {
-  transform: translateY(-10rem);
   opacity: 0;
+  transform: translate(-50%, -46%);
 }
-
 .modal-enter-active {
-  transform: translateY(0);
   opacity: 1;
-  transition: all 200ms;
+  transform: translate(-50%, -50%);
+  transition: opacity 250ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .modal-exit {
-  transform: translateY(0);
   opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.modal-exit-active {
+  opacity: 0;
+  transform: translate(-50%, -46%);
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 
-.modal-exit-active {
-  transform: translateY(-10rem);
-  opacity: 0;
-  transition: all 200ms;
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .modal {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--modal-radius) var(--modal-radius) 0 0;
+    max-height: 85vh;
+  }
+
+  .modal-enter        { opacity: 0; transform: translateY(40px); }
+  .modal-enter-active { opacity: 1; transform: translateY(0); transition: opacity 250ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .modal-exit         { opacity: 1; transform: translateY(0); }
+  .modal-exit-active  { opacity: 0; transform: translateY(40px); transition: opacity 200ms ease, transform 200ms ease; }
 }

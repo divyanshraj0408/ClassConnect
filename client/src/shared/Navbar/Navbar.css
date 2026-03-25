@@ -1,15 +1,92 @@
-.navbar {
-  height: 100px;
-  max-width: 100%;
-  box-shadow: 0 0.5px 5px var(--accent);
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
+/* ── Design tokens (shared with LandingPage & Auth) ────────────────────────── */
+:root {
+  --nav-bg:       rgba(11, 15, 26, 0.85);
+  --nav-border:   rgba(255, 255, 255, 0.08);
+  --nav-accent:   #4f8ef7;
+  --nav-accent-2: #a78bfa;
+  --nav-text:     #e2e8f0;
+  --nav-font-head: "Fraunces", Georgia, serif;
+  --nav-font-body: "DM Sans", system-ui, sans-serif;
 }
+
+/* ── Navbar shell ──────────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--nav-border);
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--nav-font-body);
+}
+
 .navbar-container {
-  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-direction: row;
+  gap: 1rem;
+}
+
+/* ── Logo slot ─────────────────────────────────────────────────────────────── */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--nav-font-head);
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, var(--nav-accent), var(--nav-accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  cursor: default;
+}
+
+/* If the logo is an <img>, constrain its height */
+.navbar-logo img {
+  height: 32px;
+  width: auto;
+  /* imgs don't inherit -webkit-text-fill-color, so no conflict */
+  -webkit-text-fill-color: initial;
+}
+
+/* ── CTA button ────────────────────────────────────────────────────────────── */
+.navbar-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--nav-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--nav-border);
+  background: transparent;
+  color: var(--nav-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.navbar-cta:hover {
+  border-color: var(--nav-accent);
+  color: var(--nav-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(79, 142, 247, 0.2);
+}
+
+.navbar-cta:active {
+  transform: translateY(0);
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .navbar-container { padding: 0.75rem 1rem; }
+  .navbar-cta       { font-size: 0.8rem; padding: 0.45rem 1rem; }
 }

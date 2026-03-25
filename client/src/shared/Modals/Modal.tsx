@@ -1,51 +1,67 @@
-import React from "react";
+import React, { CSSProperties, FormEvent, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
-
 import Backdrop from "./Backdrop";
 import "./Modal.css";
 
-interface Props {
-  className?: string;
-  style?: object;
-  headerClass?: string;
-  header?: string;
-  onSubmit?: any;
+interface ModalProps {
+  className?:    string;
+  style?:        CSSProperties;
+  headerClass?:  string;
+  header?:       string;
+  onSubmit?:     (event: FormEvent<HTMLFormElement>) => void;
   contentClass?: string;
-  footerClass?: string;
-  footer?: any;
-  show?: boolean;
-  onCancel?: any;
-  children?: any;
+  footerClass?:  string;
+  footer?:       ReactNode;
+  show?:         boolean;
+  onCancel?:     () => void;
+  children?:     ReactNode;
 }
 
-const ModalOverlay = (props: Props) => {
+// ── Overlay (portalled into #modal-hook) ─────────────────────────────────────
+const ModalOverlay: React.FC<ModalProps> = ({
+  className,
+  style,
+  headerClass,
+  header,
+  onSubmit,
+  contentClass,
+  footerClass,
+  footer,
+  children,
+}) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    if (onSubmit) {
+      onSubmit(event);
+    } else {
+      event.preventDefault();
+    }
+  };
+
   const content = (
-    <div className={`modal ${props.className}`} style={props.style}>
-      <header className={`modal__header ${props.headerClass}`}>
-        <h2>{props.header}</h2>
+    <div className={`modal ${className ?? ""}`} style={style} role="dialog" aria-modal="true" aria-label={header}>
+      <header className={`modal__header ${headerClass ?? ""}`}>
+        <h2 className="modal__title">{header}</h2>
       </header>
-      <form
-        onSubmit={
-          props.onSubmit ? props.onSubmit : (event) => event.preventDefault()
-        }
-      >
-        <div className={`modal__content ${props.contentClass}`}>
-          {props.children}
+
+      <form onSubmit={handleSubmit}>
+        <div className={`modal__content ${contentClass ?? ""}`}>
+          {children}
         </div>
-        <footer className={`modal__footer ${props.footerClass}`}>
-          {props.footer}
+        <footer className={`modal__footer ${footerClass ?? ""}`}>
+          {footer}
         </footer>
       </form>
     </div>
   );
-  return ReactDOM.createPortal(
-    content,
-    document.getElementById("modal-hook") as Element
-  );
+
+  const portalTarget = document.getElementById("modal-hook");
+  if (!portalTarget) return null;
+  return ReactDOM.createPortal(content, portalTarget);
 };
 
-const Modal = (props: Props) => {
+// ── Modal (with transition + backdrop) ───────────────────────────────────────
+const Modal: React.FC<ModalProps> = (props) => {
   return (
     <React.Fragment>
       {props.show && <Backdrop onClick={props.onCancel} />}
@@ -53,7 +69,7 @@ const Modal = (props: Props) => {
         in={props.show}
         mountOnEnter
         unmountOnExit
-        timeout={200}
+        timeout={250}
         classNames="modal"
       >
         <ModalOverlay {...props} />
