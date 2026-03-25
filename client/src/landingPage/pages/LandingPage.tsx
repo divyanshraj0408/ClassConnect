@@ -27,7 +27,7 @@ const LandingPage = () => {
               <p>
                 ClassConnect is a web application that aims to provide a
                 platform similar to Google Classroom, allowing teachers to
-                create classes, manage assignments, and interact with students
+                create classes, manage assignments, and interact with student
                 in a virtual classroom environment.
               </p>
               <Button onClick={handleClick}>Get started</Button>
