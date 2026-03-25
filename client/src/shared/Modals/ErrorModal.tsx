@@ -1,20 +1,20 @@
 import Modal from "./Modal";
 import Button from "../button/Button";
 
-interface props {
-  error: string;
-  onClear: any;
+interface ErrorModalProps {
+  error:   string | null;
+  onClear: () => void;
 }
 
-const ErrorModal = (props: props) => {
+const ErrorModal: React.FC<ErrorModalProps> = ({ error, onClear }) => {
   return (
     <Modal
-      onCancel={props.onClear}
+      onCancel={onClear}
       header="An Error Occurred!"
-      show={!!props.error}
-      footer={<Button onClick={props.onClear}>Okay</Button>}
+      show={!!error}
+      footer={<Button onClick={onClear}>Okay</Button>}
     >
-      <p>{props.error}</p>
+      <p>{error}</p>
     </Modal>
   );
 };
